@@ -51,8 +51,8 @@
 }
 
 .profile-image {
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background-color: #ddd;
   flex-shrink: 0;
@@ -77,7 +77,7 @@
 
 /* 메인 콘텐츠 */
 main {
-  max-width: 780px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -85,6 +85,17 @@ main {
 .content-section {
   padding: 48px 0;
   border-bottom: 1px solid var(--divider-color);
+}
+
+#info,
+#gallery,
+#works,
+#til {
+  scroll-margin-top: 80px;
+}
+
+.content-section:last-child {
+  border-bottom: none;
 }
 
 .content-section:last-child {
@@ -114,7 +125,61 @@ main {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 4px;
+  object-position: center;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.02);
+}
+
+/* 갤러리 모달 */
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  background-color: rgba(0, 0, 0, 0.82);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.gallery-modal.show {
+  display: flex;
+}
+
+.gallery-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.gallery-modal-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+}
+
+.gallery-close-button {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 0.95rem;
+  cursor: pointer;
 }
 
 /* 인생 작품 카드 */
@@ -133,7 +198,7 @@ main {
 }
 
 .work-thumbnail {
-  width: 140px;
+  width: 119px;
   height: 180px;
   background-color: #ddd;
   border-radius: 4px;
@@ -144,7 +209,7 @@ main {
 .work-thumbnail img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .work-info h3 {
