@@ -1,12 +1,12 @@
-# Today I Learn 페이지 만들기
 
-DDL 실습
+## DDL 실습
+
 ---
 문제 1: 테이블 생성하기 (CREATE TABLE)
 1. attendance 테이블은 중복된 데이터가 쌓이는 구조이다. 중복된 데이터는 어떤 컬럼인가?
-   - `crew_id`, `nickname`
+    - `crew_id`, `nickname`
 2. attendance 테이블에서 중복을 제거하기 위해 crew 테이블을 만들려고 한다. 어떻게 구성해 볼 수 있을까?
-   - `crew_id`와 `nickname`을 갖는 테이블을 만든다.
+    - `crew_id`와 `nickname`을 갖는 테이블을 만든다.
 3. crew 테이블에 들어가야 할 크루들의 정보는 어떻게 추출할까? (hint: DISTINCT)
 ```azure
 SELECT DISTINCT crew_id, nickname FROM hokyung.attendance;
@@ -37,20 +37,20 @@ DROP COLUMN nickname;
 ```
 ---
 문제 3: 외래키 설정하기
-attendance에서 관심사의 분리를 통해 crew 테이블을 별도로 만들었다. 
+attendance에서 관심사의 분리를 통해 crew 테이블을 별도로 만들었다.
 
 따라서, 나중에 nickname이 필요하다면 crew 테이블에서 확인하면 된다.
 그런데 잠재적인 문제가 남아 있다:
 - 만약에 crew 테이블에는 crew_id가 12번인 크루가 존재하지 않지만, attendance 테이블에는 여전히 crew_id가 12번인 크루가 존재한다면?
-  - 해당 크루가 중간에 퇴소했거나
-  - 누군가의 실수에 의해 레코드가 삭제되었거나
-    
+    - 해당 크루가 중간에 퇴소했거나
+    - 누군가의 실수에 의해 레코드가 삭제되었거나
+
 ```azure
 ALTER TABLE attendance
 ADD CONSTRAINT fk_attendance_crew
 FOREIGN KEY (crew_id) REFERENCES crew(crew_id);
 ```
-문제는 attendance.crew_id가 crew에 없는 값을 가질 수 있다는 점이다. 
+문제는 attendance.crew_id가 crew에 없는 값을 가질 수 있다는 점이다.
 이를 막으려면 attendance.crew_id를 crew.crew_id에 연결하면 된다.
 
 필요하면 삭제 정책까지 붙일 수 있다.
@@ -70,8 +70,9 @@ ALTER TABLE crew
     ADD CONSTRAINT uq_crew_nickname UNIQUE (nickname);
 ```
 닉네임 중복이 금지라면 crew.nickname에 UNIQUE 제약을 걸면 된다.
+
 ---
-DML(CRUD) 실습
+## DML(CRUD) 실습
 
 문제 5: 크루 닉네임 검색하기 (LIKE)
 3월 4일, 아침에 검프에게 어떤 크루가 상냥하게 인사했다. 그런데 검프도 구면인 것 같아서 닉네임 첫 글자가 디라는 건 떠올랐는데... 누구지?
@@ -81,6 +82,7 @@ FROM crew
 WHERE nickname LIKE '디%';
 ```
 현재 초기 데이터 기준으로는 디노가 해당된다.
+
 ---
 문제 6: 출석 기록 확인하기 (SELECT + WHERE)
 
@@ -249,7 +251,7 @@ WHERE a.attendance_date = '2025-03-05'
 ```
 ---
 
-집계 함수 실습
+## 집계 함수 실습
 
 문제 13: 크루별로 '기록된' 날짜 수 조회
 
@@ -313,4 +315,4 @@ JOIN crew c ON a.crew_id = c.crew_id
 WHERE a.start_time IS NOT NULL
 GROUP BY c.nickname;
 ```
-
+---
